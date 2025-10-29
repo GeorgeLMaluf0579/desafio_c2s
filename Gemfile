@@ -61,15 +61,9 @@ group :development, :test do
   gem "rubocop-rails-omakase"
 
   gem "ruby-lsp", "~> 0.26.2"
-
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
-
-
-
-
-

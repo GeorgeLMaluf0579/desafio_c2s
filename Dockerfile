@@ -1,3 +1,17 @@
+FROM ruby:3.3
+
+RUN apt-get update -qq && apt-get install -y nodejs
+
+WORKDIR /rails
+
+COPY Gemfile Gemfile.lock ./
+
+RUN bundle install
+
+COPY . .
+
+EXPOSE 3000
+
 ## syntax = docker/dockerfile:1
 #
 ## This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:

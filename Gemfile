@@ -35,6 +35,8 @@ gem "bootsnap", require: false
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails", "~> 2.1"
 
+gem "sidekiq", "~> 8.0"
+gem "sidekiq-scheduler", "~> 6.0"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 #
@@ -72,3 +74,4 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+

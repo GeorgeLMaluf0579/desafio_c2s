@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_29_183803) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_30_004424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "email_status", ["queued", "processing", "fail", "success"]
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
@@ -20,6 +24,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_29_183803) do
     t.string "phone"
     t.string "product_code"
     t.string "subject"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "uploaded_emails", force: :cascade do |t|
+    t.string "filename"
+    t.string "from"
+    t.string "to"
+    t.enum "status", default: "queued", null: false, enum_type: "email_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

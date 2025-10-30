@@ -42,6 +42,8 @@ group :test do
   gem "database_cleaner-active_record", "~> 2.2"
   gem "faker", "~> 3.5"
   gem "simplecov", "~> 0.22.0"
+  gem "simplecov-console", "~> 0.9.4"
+  gem "simplecov-lcov", "~> 0.9.0"
 end
 
 group :development, :test do

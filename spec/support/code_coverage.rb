@@ -5,7 +5,5 @@ SimpleCov.start 'rails' do
   add_filter '/db'
   add_filter '/spec'
 
-  add_group 'Models', 'app/models'
-  add_group 'Controllers', 'app/controllers'
   enable_coverage :branch
 end

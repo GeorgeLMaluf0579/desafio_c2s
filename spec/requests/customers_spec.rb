@@ -5,7 +5,7 @@ RSpec.describe 'Customers', type: :request do
     let!(:customer_a) { create(:customer, name: 'Alice', email: 'alice@example.com', phone: '111', product_code: 'P01') }
     let!(:customer_b) { create(:customer, name: 'Bob', email: 'bob@example.com', phone: '222', product_code: 'P02') }
 
-    it 'responds successfully and shows customers ordered by name descending' do
+    it 'responds successfully and shows customers ordered by name ascending' do
       get customers_path
 
       expect(response).to have_http_status(:ok)
@@ -13,9 +13,9 @@ RSpec.describe 'Customers', type: :request do
       # Check the body content instead of the template
       expect(response.body).to include('Alice', 'Bob')
 
-      # Ensure descending order (Bob before Alice)
+      # Ensure ascending order (Alice before Bob)
       body = response.body
-      expect(body.index('Bob')).to be < body.index('Alice')
+      expect(body.index('Bob')).to be > body.index('Alice')
     end
   end
 

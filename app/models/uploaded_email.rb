@@ -4,4 +4,6 @@ class UploadedEmail < ApplicationRecord
   processing: "processing",
   fail: "fail",
   success: "success" }, default: "queued", validate: true
+
+  has_one_attached :eml_file
 end

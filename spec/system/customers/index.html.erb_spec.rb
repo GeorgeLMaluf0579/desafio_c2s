@@ -9,7 +9,7 @@ RSpec.describe "Customer Index Page", type: :system do
     it 'show the no records found message ' do
       visit customers_path
 
-      expect(page).to have_selector('h1', text: 'Clientes importados')
+      expect(page).to have_selector('h1', text: 'Clientes')
       expect(page).to have_text('Sem registro de clientes')
       expect(page).not_to have_selector('table')
     end

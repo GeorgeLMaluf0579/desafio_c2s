@@ -10,15 +10,15 @@ RSpec.describe EmailProcessorService do
   describe '#process' do
     context 'when the process run successfully' do
       it 'create a new customer on database' do
-        expect{
+        expect {
           described_class.new(email_fornecedor_a).process
         }.to change(Customer, :count).by(1)
       end
 
       it 'create a info log with success message' do
-        expect{
+        expect {
           described_class.new(email_fornecedor_b).process
-        }.to change{EmailParserLog.where(level: :info).count}.by(1)
+        }.to change { EmailParserLog.where(level: :info).count }.by(1)
       end
 
       it 'link the log with the uploaded email' do

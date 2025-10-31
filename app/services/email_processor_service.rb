@@ -14,15 +14,15 @@ class EmailProcessorService
     parser = parser_class.new(readed_email)
     result = parser.parse!
 
-    
+
     Rails.logger.info "[EmailProcessorService] Resultado: #{result.inspect}"
 
     if contact_data_missing?(result)
       @uploaded_email.update(status: :fail)
-      log_failure('No contact data found', result)
-      return { success: false, error: 'contact_data_missing', data: result }
+      log_failure("No contact data found", result)
+      return { success: false, error: "contact_data_missing", data: result }
     end
-    
+
     customer = create_customer_from_data(result)
     log_success(result)
     @uploaded_email.update(status: :success)
@@ -30,8 +30,7 @@ class EmailProcessorService
   rescue => e
     @uploaded_email.update(status: :fail) if @uploaded_email
     log_failure(e.message, result || {})
-    { success: false, error: e.message}
-
+    { success: false, error: e.message }
   end
 
   private
@@ -44,8 +43,8 @@ class EmailProcessorService
   def select_parser_class(email)
     from = Array(email.from).first.to_s.downcase
       {
-        'fornecedora.com' => Parsers::FornecedorA,
-        'parceirob.com' => Parsers::ParceiroB
+        "fornecedora.com" => Parsers::FornecedorA,
+        "parceirob.com" => Parsers::ParceiroB
       }.each do |domain, parser|
         return parser if from.include?(domain)
       end
@@ -62,7 +61,7 @@ class EmailProcessorService
     ::EmailParserLog.create!(
       uploaded_email: @uploaded_email,
       level: :info,
-      error_message: 'Client created successfully',
+      error_message: "Client created successfully",
       extracted_data: data
     )
   end

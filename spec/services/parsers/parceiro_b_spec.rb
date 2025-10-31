@@ -38,7 +38,7 @@ RSpec.describe Parsers::ParceiroB do
 
     context 'when the email has missing data (email6.eml)' do
       let(:mail) do
-        raw_email = File.read(Rails.root.join('spec','fixtures', 'emails', 'email6.eml'))
+        raw_email = File.read(Rails.root.join('spec', 'fixtures', 'emails', 'email6.eml'))
         Mail.read_from_string(raw_email)
       end
 

@@ -3,7 +3,7 @@ FactoryBot.define do
     filename { Faker::File.file_name }
     from { Faker::Internet.email }
     to { Faker::Internet.email }
-    status { :queued } 
+    status { :queued }
 
 
     trait :with_full_fornecedor_a do

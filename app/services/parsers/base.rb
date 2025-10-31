@@ -13,11 +13,11 @@ module Parsers
 
     def normalized_body
       normalized_body_string = if @email.multipart?
-                                 part = @email.parts.find { |p| p.content_type&.include?('text/plain') } || @email.parts.first
+                                 part = @email.parts.find { |p| p.content_type&.include?("text/plain") } || @email.parts.first
                                  part.decoded
-                               else
+      else
                                  @email.body.decoded
-                               end.to_s
+      end.to_s
 
       normalized_body_string.force_encoding("UTF-8").encode("UTF-8", invalid: :replace, undef: :replace, replace: "")
     end

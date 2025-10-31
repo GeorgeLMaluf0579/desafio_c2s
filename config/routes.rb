@@ -7,5 +7,7 @@ Rails.application.routes.draw do\
 
   resources :uploaded_emails, only: %i[ index new create ]
 
+  resources :email_parser_logs, only: %i[ index ]
+
   mount Sidekiq::Web => "/sidekiq"
 end

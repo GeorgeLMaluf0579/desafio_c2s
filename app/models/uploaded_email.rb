@@ -6,4 +6,5 @@ class UploadedEmail < ApplicationRecord
   success: "success" }, default: "queued", validate: true
 
   has_one_attached :eml_file
+  has_many :email_parsers_log, dependent: :destroy
 end

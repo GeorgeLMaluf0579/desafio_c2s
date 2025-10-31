@@ -25,10 +25,11 @@ class UploadedEmailsController < ApplicationController
         from: Array(email.from).first.to_s,
         to: Array(email.to).first.to_s
       )
+
     rescue => e
       Rails.logger.error "Falha ao ler cabecalho do e-email: #{e.message}"
     end
-
+    EmailProcessorJob.perform_async(uploaded_email.id)
     redirect_to uploaded_emails_path, notice: "Arquivo enviado para a fila de processamento"
   end
 end

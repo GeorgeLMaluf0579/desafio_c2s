@@ -88,6 +88,8 @@ RSpec.describe "UploadedEmails", type: :request do
           post uploaded_emails_path, params: { email_file: invalid_content }
         }.to change(UploadedEmail, :count).by(1)
 
+        expect(EmailProcessorJob).to have_enqueued_sidekiq_job(UploadedEmail.last.id)
+
         expect(response).to redirect_to(uploaded_emails_path)
         follow_redirect!
         expect(response.body).to include('Arquivo enviado para a fila de processamento')

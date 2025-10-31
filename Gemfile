@@ -48,6 +48,7 @@ gem "mail", "~> 2.9"
 group :test do
   gem "database_cleaner-active_record", "~> 2.2"
   gem "faker", "~> 3.5"
+  gem "rspec-sidekiq", "~> 5.2"
   gem "simplecov", "~> 0.22.0"
   gem "simplecov-console", "~> 0.9.4"
   gem "simplecov-lcov", "~> 0.9.0"
@@ -79,3 +80,4 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+

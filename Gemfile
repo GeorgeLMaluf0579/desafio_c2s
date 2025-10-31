@@ -35,11 +35,16 @@ gem "bootsnap", require: false
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails", "~> 2.1"
 
+# Add sidekiq
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-scheduler", "~> 6.0"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 #
+
+# Add mail gem
+gem "mail", "~> 2.9"
+
 group :test do
   gem "database_cleaner-active_record", "~> 2.2"
   gem "faker", "~> 3.5"

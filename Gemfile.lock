@@ -428,6 +428,7 @@ DEPENDENCIES
   faker (~> 3.5)
   importmap-rails
   jbuilder
+  mail (~> 2.9)
   pg (~> 1.1)
   pry (~> 0.15.2)
   puma (>= 5.0)

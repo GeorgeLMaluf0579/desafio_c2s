@@ -6,9 +6,8 @@ class UploadedEmailsController < ApplicationController
   def new; end
 
   def create
-
     uploaded_file = params.require(:email_file)
-    
+
     unless uploaded_file.original_filename.downcase.end_with?(".eml") && uploaded_file.content_type == "message/rfc822"
       flash[:alert] = "O arquivo deve ser um email (.eml) valido"
       redirect_to new_uploaded_email_path and return

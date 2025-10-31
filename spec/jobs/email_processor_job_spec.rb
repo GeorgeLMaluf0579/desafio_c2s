@@ -66,7 +66,7 @@ RSpec.describe EmailProcessorJob, type: :job do
       }.to change(described_class.jobs, :size).by(1)
 
       job = described_class.jobs.last
-      expect(job['args']).to eq([uploaded_email.id])
+      expect(job['args']).to eq([ uploaded_email.id ])
     end
 
     it 'runs inline and calls the service' do

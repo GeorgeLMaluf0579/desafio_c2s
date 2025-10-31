@@ -108,6 +108,5 @@ RSpec.describe "UploadedEmails", type: :request do
         expect(response.body).to include('O arquivo deve ser um email (.eml) valido')
       end
     end
-
   end
 end

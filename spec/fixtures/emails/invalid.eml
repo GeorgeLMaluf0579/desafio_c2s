@@ -1,0 +1,4 @@
+From this is not a valid email header
+To this will break Mail.read
+Subject This file is intentionally broken
+Body: nothing correct here

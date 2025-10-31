@@ -5,7 +5,7 @@ Rails.application.routes.draw do\
   root "home#index"
   resources :customers, only: %i[ index ]
 
-  resources :uploaded_emails, only: %i[ index ]
+  resources :uploaded_emails, only: %i[ index new create ]
 
   mount Sidekiq::Web => "/sidekiq"
 end

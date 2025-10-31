@@ -1,0 +1,15 @@
+<h1>Importar novo email</h1>
+
+<div class="card">
+  <div class="card-body">
+    <%= form_with url: uploaded_emails_path, multipart: true do |f| %>
+      <div class="mb-3">
+        <%= f.label :email_file, "Selecione o arquivo .eml", class: "form-label" %>
+        <%= f.file_field :email_file, class: "form-control", accept: ".eml", required: true %>
+      </div>
+      <%= f.submit "Enviar e Processar", class: "btn btn-primary" %>
+      <%= link_to "Voltar", uploaded_emails_path, class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
+</div>

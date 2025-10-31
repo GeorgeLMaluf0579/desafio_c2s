@@ -9,7 +9,7 @@ RSpec.describe "Uploaded Emails Index Page", type: :system do
     it 'show the no records found message ' do
       visit uploaded_emails_path
 
-      expect(page).to have_selector('h1', text: 'Importar Emails')
+      expect(page).to have_selector('h1', text: 'Emails Importados')
       expect(page).to have_text('Sem registros de upload de emails')
       expect(page).not_to have_selector('table')
     end

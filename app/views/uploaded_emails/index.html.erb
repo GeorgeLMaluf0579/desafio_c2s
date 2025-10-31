@@ -1,24 +1,33 @@
-<h1>Importar Emails</h1>
 
-<% if @uploaded_emails.length == 0 %>
-  <p>Sem registros de upload de emails</p>
-<% else %>
-  <table class="table table-striped mt-4">
-    <thead>
-      <tr>
-        <th>De</th>
-        <th>Para</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @uploaded_emails.each do |uploaded_email| %>
-        <tr>
-          <td><%= uploaded_email.from %></td>
-          <td><%= uploaded_email.to %></td>
-          <td><%= uploaded_email.status %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+<h1>Emails Importados</h1>
+
+<div class="navbar">
+  <%= link_to "Importar Email", new_uploaded_email_path, class: "btn btn-primary" %>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <% if @uploaded_emails.length == 0 %>
+      <p>Sem registros de upload de emails</p>
+    <% else %>
+      <table class="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th>De</th>
+            <th>Para</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @uploaded_emails.each do |uploaded_email| %>
+            <tr>
+              <td><%= uploaded_email.from %></td>
+              <td><%= uploaded_email.to %></td>
+              <td><%= uploaded_email.status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>      
+  </div>
+</div>

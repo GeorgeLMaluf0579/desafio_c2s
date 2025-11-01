@@ -17,7 +17,7 @@ SimpleCov.start 'rails' do
   add_filter '/spec'
   add_filter '/spec/fixtures'
 
-  add_group 'System', 'spec/system'
+  add_group 'Services', 'spec/services'
 
   enable_coverage :branch
 end

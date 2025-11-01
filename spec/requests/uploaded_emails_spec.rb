@@ -96,16 +96,30 @@ RSpec.describe "UploadedEmails", type: :request do
       end
     end
 
-    context 'when the uploaded file is invalid with wrong extension' do
-      it 'does not create record and redirects back with alert' do
+    describe "POST /uploaded_emails/:id/reprocess" do
+      let!(:uploaded_email) { create(:uploaded_email) }
+
+      it "enqueues a reprocess job and redirects with notice" do
         expect {
-          post uploaded_emails_path, params: { email_file: invalid_file }
-        }.not_to change(UploadedEmail, :count)
+          post reprocess_uploaded_email_path(uploaded_email)
+        }.to change(EmailProcessorJob.jobs, :size).by(1)
 
-        expect(response).to redirect_to(new_uploaded_email_path)
+        expect(response).to redirect_to(uploaded_emails_path)
         follow_redirect!
+        expect(response.body).to include("Reprocessamento na fila")
+      end
+    end
 
-        expect(response.body).to include('O arquivo deve ser um email (.eml) valido')
+    describe 'GET /uploaded_emails/:id' do
+      let!(:uploaded_email) { create(:uploaded_email, from: "fulano@example.com", to: "beltrano@example.com", filename: "email1.eml") }
+
+      it 'renders the show template with email details' do
+        get uploaded_email_path(uploaded_email)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("fulano@example.com")
+        expect(response.body).to include("beltrano@example.com")
+        expect(response.body).to include("email1.eml")
       end
     end
   end

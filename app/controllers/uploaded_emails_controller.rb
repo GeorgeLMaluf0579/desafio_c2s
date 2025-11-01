@@ -1,6 +1,8 @@
 class UploadedEmailsController < ApplicationController
+  before_action :set_uploaded_email, only: %i[ show reprocess]
+
   def index
-    @uploaded_emails = UploadedEmail.select(:from, :to, :status).order(created_at: :desc)
+    @uploaded_emails = UploadedEmail.select(:id, :from, :to, :filename, :status).order(created_at: :desc)
   end
 
   def new; end
@@ -13,14 +15,14 @@ class UploadedEmailsController < ApplicationController
       redirect_to new_uploaded_email_path and return
     end
 
-    uploaded_email = UploadedEmail.create!(
+    @uploaded_email = UploadedEmail.create!(
       filename: uploaded_file.original_filename,
       eml_file: uploaded_file
     )
 
     begin
       email = Mail.read(uploaded_file.tempfile.path)
-      uploaded_email.update(
+      @uploaded_email.update(
         from: Array(email.from).first.to_s,
         to: Array(email.to).first.to_s
       )
@@ -28,7 +30,20 @@ class UploadedEmailsController < ApplicationController
     rescue => e
       Rails.logger.error "Falha ao ler cabecalho do e-email: #{e.message}"
     end
-    EmailProcessorJob.perform_async(uploaded_email.id)
+    EmailProcessorJob.perform_async(@uploaded_email.id)
     redirect_to uploaded_emails_path, notice: "Arquivo enviado para a fila de processamento"
+  end
+
+  def show; end
+
+  def reprocess
+    EmailProcessorJob.perform_async(@uploaded_email.id)
+    redirect_to uploaded_emails_path, notice: "Reprocessamento na fila"
+  end
+
+  private
+
+  def set_uploaded_email
+    @uploaded_email = UploadedEmail.includes(:email_parser_logs).find(params[:id])
   end
 end

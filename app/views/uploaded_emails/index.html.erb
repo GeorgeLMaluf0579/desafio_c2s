@@ -15,7 +15,9 @@
           <tr>
             <th>De</th>
             <th>Para</th>
+            <th>Arquivo</th>
             <th>Status</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +25,21 @@
             <tr>
               <td><%= uploaded_email.from %></td>
               <td><%= uploaded_email.to %></td>
+              <td><%= uploaded_email.filename %></td>
               <td><%= uploaded_email.status %></td>
+              <td>
+                <% if ["success", "fail"].include?(uploaded_email.status) %>
+                  <%= link_to uploaded_email_path(uploaded_email),
+                      class: "btn btn-sm btn-secondary" do %>
+                      <i class="bi bi-eye-fill"></i> Exibir
+                  <% end %>
+                  <%= link_to reprocess_uploaded_email_path(uploaded_email),
+                      data: { "turbo-method": :post},
+                      class: "btn btn-sm btn-secondary" do %>
+                        <i class="bi bi-arrow-repeat"></i> Reprocessar
+                  <% end %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

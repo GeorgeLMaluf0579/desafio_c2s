@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+  username: <%= ENV.fetch("CI_POSTGRES_USER") {"postgres" }  %>
+  password: <%= ENV.fetch("CI_POSTGRES_PASSWORD") { "password" } %>
+  host: <%= ENV.fetch("CI_POSTGRES_HOST") { "localhost" } %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("CI_POSTGRES_DB") { "desafio_c2s_test" } %>

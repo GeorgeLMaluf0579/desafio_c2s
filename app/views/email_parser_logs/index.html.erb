@@ -1,0 +1,28 @@
+<h1>Logs</h1>
+
+<% if @email_parser_logs.length == 0 %>
+  <p>Sem registro de logs</p>
+<% else %>
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Data Hora</th>
+        <th>Nivel</th>
+        <th>Arquivo</th>
+        <th>Mensagem</th>
+        <th>Dados obtidos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @email_parser_logs.each do |log| %>
+        <tr>
+          <td><%= log.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+          <td><%= log.level %></td>
+          <td><%= log.uploaded_email&.filename %></td>
+          <td><%= log.error_message&.truncate(80) %></td>
+          <td><%= JSON.pretty_generate(log.extracted_data || {}) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

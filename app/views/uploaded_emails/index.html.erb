@@ -1,0 +1,49 @@
+
+<h1>Emails Importados</h1>
+
+<div class="navbar">
+  <%= link_to "Importar Email", new_uploaded_email_path, class: "btn btn-primary" %>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <% if @uploaded_emails.length == 0 %>
+      <p>Sem registros de upload de emails</p>
+    <% else %>
+      <table class="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th>De</th>
+            <th>Para</th>
+            <th>Arquivo</th>
+            <th>Status</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @uploaded_emails.each do |uploaded_email| %>
+            <tr>
+              <td><%= uploaded_email.from %></td>
+              <td><%= uploaded_email.to %></td>
+              <td><%= uploaded_email.filename %></td>
+              <td><%= uploaded_email.status %></td>
+              <td>
+                <% if ["success", "fail"].include?(uploaded_email.status) %>
+                  <%= link_to uploaded_email_path(uploaded_email),
+                      class: "btn btn-sm btn-secondary" do %>
+                      <i class="bi bi-eye-fill"></i> Exibir
+                  <% end %>
+                  <%= link_to reprocess_uploaded_email_path(uploaded_email),
+                      data: { "turbo-method": :post},
+                      class: "btn btn-sm btn-secondary" do %>
+                        <i class="bi bi-arrow-repeat"></i> Reprocessar
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>      
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<h1>Home</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>Clientes</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 text-md-start">
+              <strong>Total:</strong>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <h5>
+                <%= @clients_count %>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Emails Importados</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 text-md-start">
+              <strong>Total:</strong>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <h5>
+                <%= @uploaded_emails %>
+              </h5>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="color: green" class="col-md-6 text-md-start">
+              <strong>Processados com sucesso:</strong>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <h6 style="color: green">
+                <%= @uploaded_emails_success %>
+              </h6>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="color: red" class="col-md-6 text-md-start">
+              <strong>Processados com falhas:</strong>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <h6 style="color: red">
+                <%= @uploaded_emails_fails %>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

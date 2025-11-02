@@ -1,0 +1,26 @@
+<h1>Clientes</h1>
+
+<% if @customers.length == 0 %>
+  <p>Sem registro de clientes</p>
+<% else %>
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Produto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @customers.each do |customer| %>
+        <tr>
+          <td><%= customer.name %></td>
+          <td><%= customer.email %></td>
+          <td><%= customer.phone %></td>
+          <td><%= customer.product_code %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,38 @@
+<h1>Detalhe do upload</h1>
+
+<div class="card">
+  <div class="card-body">
+    <p><strong>De:</strong> <%= @uploaded_email.from %></p>
+    <p><strong>Para:</strong> <%= @uploaded_email.to %></p>
+    <p><strong>Arquivo</strong> <%= @uploaded_email.filename %></p>
+    <p><strong>Enviado em:</strong> <%= @uploaded_email.created_at.strftime("%d/%m/%Y %H:%M:%S")%></p>
+
+    <h4>Logs de processamento</h4>
+
+    <% if @uploaded_email.email_parser_logs.length ==0 %>
+      <p>Sem registro de logs</p>
+    <% else %>
+      <table class="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th>Data Hora</th>
+            <th>Nivel</th>
+            <th>Mensagem</th>
+            <th>Dados obtidos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @uploaded_email.email_parser_logs.each do |log| %>
+            <tr>
+              <td><%= log.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+              <td><%= log.level %></td>
+              <td><%= log.error_message&.truncate(80) %></td>
+              <td><%= JSON.pretty_generate(log.extracted_data || {}) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>      
+    <% end %>
+  </div>
+</div>
+<%= link_to "Voltar", uploaded_emails_path, class: "btn btn-secondary" %>

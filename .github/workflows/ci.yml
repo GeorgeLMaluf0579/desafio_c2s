@@ -1,0 +1,112 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  scan_ruby:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: password
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      
+      - name: Scan for Rails security vulnerabilities
+        run: bin/brakeman --no-pager
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github
+      
+      - name: Setup database config
+        run: cp config/database.yml.ci config/database.yml
+      
+      - name: Prepare database
+        run: bundle exec rails db:drop db:create db:migrate RAILS_ENV=test
+      
+      - name: Run RSpec with coverage
+        run: bundle exec rspec
+
+      # Generate coverage report
+      - name: Coverage report
+        if: always()
+        uses: aki77/simplecov-report-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          result_path: coverage/.resulset.json
+          min_coverage: 80
+          upload_artifact: true
+          comment: true
+  
+
+# name: CI
+#
+#on:
+#  pull_request:
+#  push:
+#    branches: [ main ]
+#
+#jobs:
+#  scan_ruby:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: .ruby-version
+#          bundler-cache: true
+#
+#      - name: Scan for common Rails security vulnerabilities using static analysis
+#        run: bin/brakeman --no-pager
+#
+#  scan_js:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: .ruby-version
+#          bundler-cache: true
+#
+#      - name: Scan for security vulnerabilities in JavaScript dependencies
+#        run: bin/importmap audit
+#
+#  lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: .ruby-version
+#          bundler-cache: true
+#
+#      - name: Lint code for consistent style
+#        run: bin/rubocop -f github
+#

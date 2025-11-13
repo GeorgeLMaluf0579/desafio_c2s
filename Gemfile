@@ -73,7 +73,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase"
 
-  gem "ruby-lsp", "~> 0.26.2"
+  gem "ruby-lsp", "~> 0.26.3"
 end
 
 group :development do
